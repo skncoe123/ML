@@ -1,0 +1,84 @@
+import pandas as pd
+df = pd.read_csv('heart1.csv')
+df
+df.shape
+df.head()
+df.tail()
+df.head(2)
+df.tail(1)
+df.info()
+df.describe()
+df.isna()
+df.isnull().sum()
+df1=df.fillna(df.median())
+df1
+df1.dtypes
+df1.duplicated().sum()
+df2=df1.drop_duplicates()
+df2.dtypes
+df3=df2.astype({'trestbps':'int','fbs':'int','oldpeak':'int'})
+df3.dtypes
+df[['age','cp']]
+print(df3.to_string())
+df3.iloc[0:5,0:14]
+from sklearn.model_selection import train_test_split
+X=df3.drop('target',axis ='columns')
+Y=df3['target']
+X
+Y
+X=df3.iloc[ : ,0:13]
+X
+Y=df3.iloc[ : ,-1]
+Y
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.25)
+X_train.shape
+Y_train.shape
+X_test.shape
+Y_test.shape
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+Reg=LogisticRegression()
+Reg.fit(X_train,Y_train)
+
+Y_predict=Reg.predict(X_test)
+Y_predict.shape
+print(accuracy_score(Y_test,Y_predict))
+print(classification_report(Y_test,Y_predict))
+print(confusion_matrix(Y_test,Y_predict))
+sns.heatmap(confusion_matrix(Y_test,Y_predict),annot=True)
+df3.plot.bar()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

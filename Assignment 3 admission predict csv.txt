@@ -1,0 +1,156 @@
+import pandas as pd
+df=pd.read_csv('Admission_Predict.csv',sep=',')
+df
+df.columns
+df.head()
+df.shape
+df.columns=df.columns.str.rstrip()
+df.columns
+df.isnull().sum()
+
+# replace values in in Chance of Admit column by 0 or 1 based on threshold value if 0.80> 1 put 1 else put 0
+
+df.loc[df['Chance of Admit'] >=0.80,'Chance of Admit']=1
+df.loc[df['Chance of Admit'] < 0.80,'Chance of Admit']=0
+
+df['Chance of Admit']
+df=df.drop('Serial No.',axis=1)
+df
+
+X = df.iloc[:,0:7].values
+y=df.iloc[:,7].values
+
+X
+y
+
+from sklearn.model_selection import train_test_split,StratifiedKFold,cross_val_score
+X_train,X_test,y_train,y_test= train_test_split(X,y,test_size=0.25,random_state=0)
+
+print(X_train.shape,end=' ')
+print(X_test.shape)
+
+from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
+
+model = DecisionTreeClassifier(criterion='entropy')
+model.fit(X_train,y_train)
+y_pred=model.predict(X_test)
+
+from sklearn.metrics import confusion_matrix
+matrix=confusion_matrix(y_test,y_pred,labels=[0.0,1.0])
+matrix
+
+from sklearn.metrics import accuracy_score
+
+acc = accuracy_score(y_test,y_pred)
+print('Accuracy of Decision Tree model = ',acc)
+
+from sklearn.metrics import classification_report
+cr =classification_report(y_test,y_pred)
+print('Classification Report ', cr )
+
+feature_names=df.columns[0:7]
+print(feature_names,end=' ')
+class_names=[str(x) for x in model.classes_]
+class_names
+
+
+from sklearn.tree import plot_tree
+fig=plt.figure(figsize=(50,30))
+plot_tree(model,feature_names=feature_names,class_names=class_names,filled=True)
+plt.savefig('tree_visualization.png')
+
+pip install graphviz
+
+import graphviz
+from sklearn import tree
+dot_data = tree.export_graphviz(model,out_file=None,feature_names=feature_names, class_names=class_names,filled=True)
+graph=graphviz.Source(dot_data,format="png")
+
+sf = StratifiedKFold(n_splits=5,shuffle=True,random_state=0)
+
+depth=[1,2,3,4,5,6,7,8,9,10]
+for d in depth :
+score = cross_val_score(tree.DecisionTreeClassifier(criterion='entropy',max_depth=d,random_state=0),X_train,y_train,cv=s
+print("Average score for depth {} is {} :".format(d,score.mean()))
+
+score.mean()
+
+maxdepth=[]
+gini_acc=[]
+entropy_acc=[]
+for i in range(1,11):
+dtree=DecisionTreeClassifier(criteria='gini',max_depth=i)
+dtree.fit(X_train,y_train)
+pred=dtree.predict(y_test,pred)
+gini_acc.append(accuracy_score(y_test,y_pred))
+maxdepth.append(i)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

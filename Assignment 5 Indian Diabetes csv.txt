@@ -1,0 +1,52 @@
+import pandas as pd
+from keras.models import Sequential
+from keras.layers import Dense
+
+df=pd.read_csv('pima-indians-diabetes.csv')
+df.info
+df.columns
+X=df.iloc[:,0:-1].values
+y=df.iloc[:,8].values
+
+# if error in graphviz then download http://www.graphviz.org/download/ and insta
+model = Sequential()
+model.add(Dense(12, input_dim=8, activation='relu'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+# compile the keras model
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
+# fit the keras model on the dataset
+model.fit(X, y, epochs=150, batch_size=10)
+# evaluate the keras model
+_, accuracy = model.evaluate(X, y)
+print('Accuracy: %.2f' % (accuracy*100))
+from ann_visualizer.visualize import ann_viz;
+ann_viz(model, title="My first neural network")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+df = pd.read_csv('weight-height.csv')
+df
+
+df.isna()
+df.isnull().sum()
+df.dtypes
+df1=df.drop("Gender",axis="columns")
+df1.duplicated().sum()
+X=df1.iloc[ : ,0:1]
+Y=df1.iloc[ : ,-1]
+X
+Y
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.2)
+X_train.shape
+Y_train.shape
+X_test.shape
+Y_test.shape
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import matplotlib.pyplot as plt
+Reg=LinearRegression()
+Reg.fit(X_train,Y_train)
+Y_Predict = Reg.predict(X_test)
+print(Reg.coef_)
+print(Reg.intercept_)
+
+plt.scatter(X_test,Y_test)
+plt.plot(X_test,Y_Predict,color="red")
+
+print('meansquarederror',metrics.mean_squared_error(Y_test,Y_Predict)
+Rsquare = Reg.score(X_train,Y_train)
+print(Rsquare)
+
+
+
+
+
+
